@@ -14,8 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class ,'login']);
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class,'login']);
+
+Route::get('/users', [App\Http\Controllers\UserController::class,'index']);
 
 Route::middleware('auth:sanctum')->group(function () {
+
   Route::post('/logout',[App\Http\Controllers\Auth\LogoutController::class,'logout']);
+
+  Route::apiResource('users',App\Http\Controllers\UserController::class)
+    ->except(['index']);
+
 });
