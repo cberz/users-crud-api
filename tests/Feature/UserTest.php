@@ -16,7 +16,7 @@ class UserTest extends TestCase
   {
     User::factory(10)->create();
 
-    $this->assertDatabaseCount('users',10);
+    $this->assertDatabaseCount('users', 10);
 
     $response = $this->getJson('/api/users');
 
@@ -29,6 +29,7 @@ class UserTest extends TestCase
             'name',
             'lastname',
             'email',
+            'date_of_birth',
             'age',
           ]
         ]
@@ -58,6 +59,33 @@ class UserTest extends TestCase
     $response->assertOk()
       ->assertExactJson([
         'message' => 'Resource deleted succesfully'
+      ]);
+  }
+
+  public function testUserInformationCanBeShownToAuthenticatedUsers(Type $var = null)
+  {
+    $token = $this->authToken();
+
+    $user = User::factory()->create();
+
+    $this->assertDatabaseCount('users', 2);
+
+    $response = $this->withHeaders([
+      'Authorization' => "Bearer $token",
+    ])
+      ->getJson("/api/users/$user->id");
+
+      $response->assertOk()
+      ->assertJsonStructure([
+        'data' => [
+          'avatar',
+          'personal_id',
+          'name',
+          'lastname',
+          'email',
+          'date_of_birth',
+          'age',
+        ]
       ]);
   }
 
