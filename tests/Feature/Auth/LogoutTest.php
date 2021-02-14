@@ -13,9 +13,25 @@ class LogoutTest extends TestCase
 
   public function testUserCanLogoutSuccessfully()
   {
-    $user = User::factory()->create();
+
+    $token = $this->authToken();
 
     $this->assertDatabaseCount('users', 1);
+
+    $response = $this->withHeaders([
+      'Authorization' => "Bearer $token",
+    ])
+      ->postJson('/api/logout');
+
+    $response->assertOk()
+      ->assertExactJson([
+        'message' => 'Successfully logged out',
+      ]);
+  }
+
+  public function authToken()
+  {
+    $user = User::factory()->create();
 
     $response = $this->postJson('/api/login', [
       'email' => $user->email,
@@ -23,17 +39,6 @@ class LogoutTest extends TestCase
       'device_name' => 'api-test',
     ]);
 
-    $token = $response->original['token'];
-
-    $response = $this
-      ->withHeaders([
-        'Authorization' => "Bearer $token",
-      ])
-      ->postJson('/api/logout');
-
-    $response->assertOk()
-      ->assertJsonStructure([
-        'message',
-      ]);
+    return $response['token'];
   }
 }
