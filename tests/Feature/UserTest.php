@@ -158,8 +158,7 @@ class UserTest extends TestCase
             'date_of_birth',
             'age',
           ]
-        ])
-        ;
+        ]);
 
       $this->assertDatabaseCount('users', 2)
         ->assertDatabaseHas('users', [
@@ -167,6 +166,48 @@ class UserTest extends TestCase
         ]);
   }
 
+  public function testUserInformationCanBeModifiedByAuthenticatedUsers()
+  {
+    $token = $this->authToken();
+
+    $user = User::factory()->create();
+
+    $this->assertDatabaseCount('users', 2);
+
+    $updated_name = $this->faker->unique()->firstName;
+    $updated_email = $this->faker->unique()->safeEmail;
+
+    $response = $this->withHeaders([
+      'Authorization' => "Bearer $token",
+    ])
+      ->putJson("/api/users/$user->id", [
+        'personal_id' => $this->faker->randomNumber,
+        'name' => $updated_name,
+        'lastname'  => $this->faker->lastName,
+        'date_of_birth'  => $this->faker->date,
+        'email' => $updated_email,
+      ]);
+
+      $response->assertSuccessful()
+        ->assertJsonStructure([
+          'data' => [
+            'personal_id',
+            'avatar',
+            'name',
+            'lastname',
+            'email',
+            'date_of_birth',
+            'age',
+          ]
+        ]);
+
+      $this->assertDatabaseCount('users', 2)
+        ->assertDatabaseHas('users', [
+          'id' => 2,
+          'name' => $updated_name,
+          'email' => $updated_email,
+        ]);
+  }
 
   public function authToken()
   {
