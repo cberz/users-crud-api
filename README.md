@@ -51,7 +51,7 @@ composer install
 ```
 
 ```bash
-./vendor/bin/sail artisan migrate --seed
+./vendor/bin/sail artisan migrate:fresh --seed
 ```
 
 #### Base URL
