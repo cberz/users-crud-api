@@ -25,7 +25,6 @@ class UserTest extends TestCase
       ->assertJsonStructure([
         'data' => [
           [
-            'avatar',
             'personal_id',
             'name',
             'lastname',
@@ -79,7 +78,6 @@ class UserTest extends TestCase
       $response->assertOk()
       ->assertJsonStructure([
         'data' => [
-          'avatar',
           'personal_id',
           'name',
           'lastname',
@@ -111,7 +109,6 @@ class UserTest extends TestCase
         ->assertJsonStructure([
           'data' => [
             'personal_id',
-            'avatar',
             'name',
             'lastname',
             'email',
@@ -151,7 +148,6 @@ class UserTest extends TestCase
         ->assertJsonStructure([
           'data' => [
             'personal_id',
-            'avatar',
             'name',
             'lastname',
             'email',
@@ -192,7 +188,6 @@ class UserTest extends TestCase
         ->assertJsonStructure([
           'data' => [
             'personal_id',
-            'avatar',
             'name',
             'lastname',
             'email',

@@ -24,11 +24,10 @@ class UserRequest extends FormRequest
   public function rules()
   {
     return [
-      'avatar' => 'nullable|image',
       'personal_id' => 'required|integer',
       'name' => 'required|string|max:255',
       'lastname' => 'required|string|max:255',
-      'email' => 'required|email|unique:users',
+      'email' => 'required|email',
       'date_of_birth' => 'required|date',
       'is_admin' => 'boolean',
       'password' => 'required_if:is_admin,1|confirmed|string|max:255',

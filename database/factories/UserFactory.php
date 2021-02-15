@@ -24,7 +24,6 @@ class UserFactory extends Factory
   {
     return [
       'personal_id' => $this->faker->randomNumber,
-      'avatar'  => $this->faker->imageUrl,
       'name' => $this->faker->firstName,
       'lastname'  => $this->faker->lastName,
       'date_of_birth'  => $this->faker->date,
