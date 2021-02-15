@@ -54,6 +54,12 @@ composer install
 ./vendor/bin/sail artisan migrate:fresh --seed
 ```
 
+or
+
+```bash
+./vendor/bin/sail artisan migrate --seed
+```
+
 #### Base URL
 
 http://localhost
