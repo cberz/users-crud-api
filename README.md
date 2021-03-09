@@ -24,12 +24,6 @@ https://www.docker.com/get-started
 
 ## How to use
 
-Move to the root directory on maintenance-crud-api
-
-```bash
-$ cd maintenance-crud-api/
-```
-
 Copy .env.example file to .env
 
 ```bash
